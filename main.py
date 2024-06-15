@@ -1,0 +1,40 @@
+import asyncio
+import pygame
+from py_thumbpad import PyThumbPad
+import sys
+
+WIDTH, HEIGHT = 800, 600
+
+class App:
+  def __init__(self):
+    pygame.init()
+    self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption("Demo of ThumbPad")
+    self.thumb_pad = PyThumbPad((100, HEIGHT - 100))
+    #font
+    self.font = pygame.font.Font('assets/font/PixelSimpel.otf', 32)
+
+  async def render(self):
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+                break
+            self.thumb_pad.listen_events(event)
+
+        self.screen.fill((10, 220, 10))
+
+        # bg to highlight the slider with theme 'one'
+        pygame.draw.rect(self.screen, (123, 157, 243), (0, 0, self.screen.get_width(), 110))
+
+        # render thumbpad
+        self.thumb_pad.render(self.screen)
+
+        #update the display
+        pygame.display.flip()
+        # clock
+        pygame.time.Clock().tick(60)
+        await asyncio.sleep(0)
+        
+asyncio.run(App().render())

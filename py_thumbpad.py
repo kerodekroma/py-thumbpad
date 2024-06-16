@@ -20,4 +20,4 @@ class PyThumbPad:
         pass
 
     def listen_events(self, event):
-        pass
+        self.button_pad.listen_events(event)

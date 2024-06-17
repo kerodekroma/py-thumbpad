@@ -16,27 +16,36 @@ class ButtonPad:
         self.rect = self.surface.get_rect()
         self.rect.x = self.position[0] - self.radius
         self.rect.y = self.position[1] - self.radius
-        self.rect.width = self.radius * 2
-        self.rect.height = self.radius * 2
 
-    def listen_events(self, event): 
+    def listen_events(self, event, donut): 
         mouse_pos = pygame.mouse.get_pos()
+
         if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.FINGERDOWN:
-            if self.rect.collidepoint(mouse_pos):
+            # Check if the click is inside the circle
+            if distance(mouse_pos, [self.rect.x + self.radius, self.rect.y + self.radius]) <= self.radius:
                 self.dragging = True
 
         if event.type == pygame.MOUSEBUTTONUP or event.type == pygame.FINGERUP:
             self.dragging = False
 
-        if self.dragging:
-            self.update_position(mouse_pos)
-
         if (event.type == pygame.MOUSEMOTION or event.type == pygame.FINGERMOTION) and self.dragging:
-            self.update_position(mouse_pos)
+            self.update_position(mouse_pos, donut)
 
-    def update_position(self, mouse_pos):
-        self.rect.x = mouse_pos[0] - self.radius
-        self.rect.y = mouse_pos[1] - self.radius
+    def update_position(self, mouse_pos, donut):
+        dist_to_center = distance(mouse_pos, donut.position)
+
+        # Ensure the small circle stays within the container
+        if dist_to_center + self.radius <= donut.outer_radius:
+            self.rect.x = mouse_pos[0]
+            self.rect.y = mouse_pos[1]
+        
+        if dist_to_center + self.radius > donut.outer_radius:
+            angle = math.atan2(mouse_pos[1] - donut.position[1], mouse_pos[0] - donut.position[0])
+            self.rect.x = donut.position[0] + ( donut.outer_radius - self.radius ) * math.cos(angle) 
+            self.rect.y = donut.position[1] + ( donut.outer_radius - self.radius ) * math.sin(angle) 
+
+        self.rect.x = self.rect.x - self.radius
+        self.rect.y = self.rect.y - self.radius
 
     def update(self):
         pass

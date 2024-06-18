@@ -14,12 +14,12 @@ class PyThumbPad:
         self.donut = donut.Donut(self.position, self.donut_outer_radius, self.donut_inner_radius, self.donut_color)
         self.button_pad = button_pad.ButtonPad(self.position, self.button_radius, self.button_color) 
 
+    def update(self):
+        self.button_pad.update()
+
     def render(self, screen):
         self.donut.render(screen)
         self.button_pad.render(screen)
-
-    def update(self, screen):
-        pass
 
     def listen_events(self, event):
         self.button_pad.listen_events(event, self.donut)

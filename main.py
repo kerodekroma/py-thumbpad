@@ -28,6 +28,9 @@ class App:
         # bg to highlight the slider with theme 'one'
         pygame.draw.rect(self.screen, (123, 157, 243), (0, 0, self.screen.get_width(), 110))
 
+        # update thumbpad
+        self.thumb_pad.update()
+
         # render thumbpad
         self.thumb_pad.render(self.screen)
 

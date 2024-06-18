@@ -1,14 +1,17 @@
 import pygame 
 import math
+from tween import Tween
 
 def distance(point_1, point_2):
     return math.sqrt((point_1[0] - point_2[0]) ** 2 + (point_1[1] - point_2[1]) ** 2)
+
 class ButtonPad:
     def __init__(self, position, radius, color):
         self.position = position
         self.radius = radius
         self.color = color
         self.dragging = False
+        self.animations = []
         self.setup()
 
     def setup(self):
@@ -16,20 +19,31 @@ class ButtonPad:
         self.rect = self.surface.get_rect()
         self.rect.x = self.position[0] - self.radius
         self.rect.y = self.position[1] - self.radius
+        self.initial_position = [self.rect.x, self.rect.y]
 
     def listen_events(self, event, donut): 
         mouse_pos = pygame.mouse.get_pos()
 
         if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.FINGERDOWN:
             # Check if the click is inside the circle
-            if distance(mouse_pos, [self.rect.x + self.radius, self.rect.y + self.radius]) <= self.radius:
+            if distance(mouse_pos, [self.rect.x + self.radius, self.rect.y + self.radius]) <= donut.outer_radius:
                 self.dragging = True
 
         if event.type == pygame.MOUSEBUTTONUP or event.type == pygame.FINGERUP:
             self.dragging = False
+            self.return_back()
 
         if (event.type == pygame.MOUSEMOTION or event.type == pygame.FINGERMOTION) and self.dragging:
             self.update_position(mouse_pos, donut)
+
+    def return_back(self):
+        from_x = self.rect.x
+        from_y = self.rect.y
+        duration = 0.3
+        self.animations = [
+            Tween.animate(self.rect, 'x', from_x, self.initial_position[0], duration, 'ease_in_out'),
+            Tween.animate(self.rect, 'y', from_y, self.initial_position[1], duration, 'ease_in_out')
+        ]
 
     def update_position(self, mouse_pos, donut):
         dist_to_center = distance(mouse_pos, donut.position)
@@ -48,7 +62,10 @@ class ButtonPad:
         self.rect.y = self.rect.y - self.radius
 
     def update(self):
-        pass
+        for animation in self.animations:
+            animation.update()
+
+        self.animations = [animation for animation in self.animations if not animation.is_complete]
 
     def render(self, screen):
         pygame.draw.circle(self.surface, self.color, (self.radius, self.radius), self.radius)

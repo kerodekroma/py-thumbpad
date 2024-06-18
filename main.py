@@ -10,7 +10,7 @@ class App:
     pygame.init()
     self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Demo of ThumbPad")
-    self.thumb_pad = PyThumbPad((100, HEIGHT - 100))
+    self.thumb_pad = PyThumbPad((150, HEIGHT - 150))
     #font
     self.font = pygame.font.Font('assets/font/PixelSimpel.otf', 32)
 

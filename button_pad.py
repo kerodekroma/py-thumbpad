@@ -23,17 +23,20 @@ class ButtonPad:
 
     def listen_events(self, event, donut): 
         mouse_pos = pygame.mouse.get_pos()
+        # Check if the click is inside the circle
+        distance_between_mouse_and_button = distance(mouse_pos, [self.rect.x + self.radius, self.rect.y + self.radius])
+        # is the button down
+        is_button_down = event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.FINGERDOWN
 
-        if event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.FINGERDOWN:
-            # Check if the click is inside the circle
-            if distance(mouse_pos, [self.rect.x + self.radius, self.rect.y + self.radius]) <= donut.outer_radius:
-                self.dragging = True
+        if is_button_down and distance_between_mouse_and_button <= donut.outer_radius:
+            self.dragging = True
 
         if event.type == pygame.MOUSEBUTTONUP or event.type == pygame.FINGERUP:
             self.dragging = False
             self.return_back()
 
-        if (event.type == pygame.MOUSEMOTION or event.type == pygame.FINGERMOTION) and self.dragging:
+        #if (event.type == pygame.MOUSEMOTION or event.type == pygame.FINGERMOTION) and self.dragging:
+        if event.type == pygame.FINGERMOTION or self.dragging:
             self.update_position(mouse_pos, donut)
 
     def return_back(self):

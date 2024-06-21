@@ -36,7 +36,7 @@ class ButtonPad:
             self.return_back()
 
         #if (event.type == pygame.MOUSEMOTION or event.type == pygame.FINGERMOTION) and self.dragging:
-        if event.type == pygame.FINGERMOTION or self.dragging:
+        if self.dragging:
             self.update_position(mouse_pos, donut)
 
     def return_back(self):

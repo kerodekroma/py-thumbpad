@@ -45,7 +45,10 @@ while running:
     mouse_x, mouse_y = pygame.mouse.get_pos()
 
     # Calculate angle
+    print("mouse", mouse_x, mouse_y)
+    print("reference", reference_coord)
     angle = calculate_angle(reference_coord[0], reference_coord[1], mouse_x, mouse_y)
+    print("angle", angle)
 
     # Create the text surface
     text_surface = font.render(f'Angle: {angle:.2f}°', True, WHITE)

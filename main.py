@@ -26,7 +26,16 @@ class App:
         self.screen.fill((10, 220, 10))
 
         # bg to highlight the slider with theme 'one'
-        pygame.draw.rect(self.screen, (123, 157, 243), (0, 0, self.screen.get_width(), 110))
+        pygame.draw.rect(self.screen, (123, 157, 243), (0, 0, self.screen.get_width(), 120))
+
+        # printing the radian values and position
+        text_surface = self.font.render(f'Angle: {self.thumb_pad.current_angle:.2f}°', True, (0,0,0))
+        text_rect = text_surface.get_rect(center=(400, 50))
+        self.screen.blit(text_surface, text_rect)
+
+        text_surface = self.font.render(f'Direction: {self.thumb_pad.direction}', True, (0,0,0))
+        text_rect = text_surface.get_rect(center=(400, 100))
+        self.screen.blit(text_surface, text_rect)
 
         # update thumbpad
         self.thumb_pad.update()

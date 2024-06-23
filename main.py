@@ -10,7 +10,7 @@ class App:
     pygame.init()
     self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Demo of ThumbPad")
-    self.thumb_pad = PyThumbPad((150, HEIGHT - 150))
+    self.thumb_pad = PyThumbPad((150, HEIGHT - 150), 8)
     #font
     self.font = pygame.font.Font('assets/font/PixelSimpel.otf', 32)
 
@@ -33,7 +33,7 @@ class App:
         text_rect = text_surface.get_rect(center=(400, 50))
         self.screen.blit(text_surface, text_rect)
 
-        text_surface = self.font.render(f'Direction: {self.thumb_pad.direction}', True, (0,0,0))
+        text_surface = self.font.render(f'Direction: {", ".join( self.thumb_pad.directions )}', True, (0,0,0))
         text_rect = text_surface.get_rect(center=(400, 100))
         self.screen.blit(text_surface, text_rect)
 

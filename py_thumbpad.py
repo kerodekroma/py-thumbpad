@@ -16,6 +16,7 @@ class PyThumbPad:
         self.current_angle = 0.0
         self.quadrants = quadrants
         self.directions = []
+        self.touch_in_progress = False
 
     def update(self):
         self.button_pad.update()
@@ -25,13 +26,17 @@ class PyThumbPad:
         self.button_pad.render(screen)
 
     def listen_events(self, event):
-        self.button_pad.listen_events(event, self.donut)
-        self.directions = self.get_directions(0)
-        self.current_angle = 0.0
-        if self.button_pad.dragging:
-            mouse_x, mouse_y = pygame.mouse.get_pos()
-            self.current_angle = calculate_angle(self.position[0], self.position[1], mouse_x, mouse_y )
-            self.directions = self.get_directions(self.current_angle)
+        if not self.touch_in_progress or self.button_pad.dragging: 
+            self.button_pad.listen_events(event, self.donut)
+            self.directions = self.get_directions(0)
+            self.current_angle = 0.0
+            if self.button_pad.dragging:
+                self.touch_in_progress = True
+                mouse_x, mouse_y = pygame.mouse.get_pos()
+                self.current_angle = calculate_angle(self.position[0], self.position[1], mouse_x, mouse_y )
+                self.directions = self.get_directions(self.current_angle)
+            if not self.button_pad.dragging:
+                self.touch_in_progress = False
 
     def get_directions(self, current_angle):
         if self.quadrants == 4:

@@ -13,8 +13,6 @@ class App:
     self.thumb_pad = PyThumbPad((150, HEIGHT - 150), 8)
     #font
     self.font = pygame.font.Font('assets/font/PixelSimpel.otf', 32)
-    # touches
-    self.touches = {}
 
   async def render(self):
     while True:
@@ -23,15 +21,6 @@ class App:
                 pygame.quit()
                 sys.exit()
                 break
-            # Handle multi-touch events
-            if event.type == pygame.FINGERDOWN:
-                self.touches[event.finger_id] = (event.x * self.screen.get_width(), event.y * self.screen.get_height())
-            elif event.type == pygame.FINGERMOTION:
-                if event.finger_id in self.touches:
-                    self.touches[event.finger_id] = (event.x * self.screen.get_width(), event.y * self.screen.get_height())
-            elif event.type == pygame.FINGERUP:
-                if event.finger_id in self.touches:
-                    del self.touches[event.finger_id]
             self.thumb_pad.listen_events(event)
 
         self.screen.fill((10, 220, 10))
@@ -52,10 +41,6 @@ class App:
         text_surface = self.font.render(f'Num of touches: {", ".join( self.touches.values())}', True, (0,0,0))
         text_rect = text_surface.get_rect(center=(400, 140))
         self.screen.blit(text_surface, text_rect)
-
-        # Draw circles at each touch point
-        for touch in self.touches.values():
-            pygame.draw.circle(self.screen, (0,0,255), (int(touch[0]), int(touch[1])), 20)
 
         # update thumbpad
         self.thumb_pad.update()

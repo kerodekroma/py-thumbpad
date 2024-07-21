@@ -28,8 +28,7 @@ while running:
         if event.type == pygame.FINGERDOWN:
             touches[event.finger_id] = (event.x * screen.get_width(), event.y * screen.get_height())
         elif event.type == pygame.FINGERMOTION:
-            if event.finger_id in touches:
-                touches[event.finger_id] = (event.x * screen.get_width(), event.y * screen.get_height())
+            touches[event.finger_id] = (event.x * screen.get_width(), event.y * screen.get_height())
         elif event.type == pygame.FINGERUP:
             if event.finger_id in touches:
                 del touches[event.finger_id]
@@ -49,4 +48,3 @@ while running:
 
 # Quit Pygame and PyBag
 pygame.quit()
-pgbag.quit()

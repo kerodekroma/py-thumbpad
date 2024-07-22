@@ -37,11 +37,6 @@ class App:
         text_rect = text_surface.get_rect(center=(400, 100))
         self.screen.blit(text_surface, text_rect)
 
-        #printing the touches
-        text_surface = self.font.render(f'Num of touches: {", ".join( self.touches.values())}', True, (0,0,0))
-        text_rect = text_surface.get_rect(center=(400, 140))
-        self.screen.blit(text_surface, text_rect)
-
         # update thumbpad
         self.thumb_pad.update()
 

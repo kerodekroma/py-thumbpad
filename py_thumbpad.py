@@ -5,12 +5,12 @@ from utils import calculate_angle, get_direction, get_direction_expanded
 
 class PyThumbPad:
     def __init__(self, position, quadrants=4):
-        self.donut_outer_radius = 60
-        self.donut_inner_radius = 55
+        self.donut_outer_radius = 100
+        self.donut_inner_radius = 90
         self.position = position
         self.donut_color = (123, 157, 243)
         self.button_color = (255, 255, 0)
-        self.button_radius = 50
+        self.button_radius = 60
         self.donut = donut.Donut(self.position, self.donut_outer_radius, self.donut_inner_radius, self.donut_color)
         self.button_pad = button_pad.ButtonPad(self.position, self.button_radius, self.button_color) 
         self.current_angle = 0.0

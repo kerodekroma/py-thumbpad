@@ -31,10 +31,10 @@ class ButtonPad:
         is_button_move =event.type == pygame.MOUSEMOTION or event.type == pygame.FINGERMOTION
         is_button_up = event.type == pygame.MOUSEBUTTONUP or event.type == pygame.FINGERUP
 
-        if is_button_down and distance_between_mouse_and_button >= donut.outer_radius:
+        if is_button_down and distance_between_mouse_and_button > donut.outer_radius:
             self.track_touches.append(0)
 
-        if is_button_down and distance_between_mouse_and_button <= donut.outer_radius:
+        if is_button_down and distance_between_mouse_and_button < donut.outer_radius:
             self.dragging = True
             self.track_touches.append(1)
 

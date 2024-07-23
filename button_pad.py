@@ -12,6 +12,7 @@ class ButtonPad:
         self.color = color
         self.dragging = False
         self.animations = []
+        self.track_touches = []
         self.setup()
 
     def setup(self):
@@ -27,19 +28,27 @@ class ButtonPad:
         distance_between_mouse_and_button = distance(mouse_pos, [self.rect.x + self.radius, self.rect.y + self.radius])
         # is the button down
         is_button_down = event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.FINGERDOWN
+        is_button_move =event.type == pygame.MOUSEMOTION or event.type == pygame.FINGERMOTION
         is_button_up = event.type == pygame.MOUSEBUTTONUP or event.type == pygame.FINGERUP
 
-        if ( is_button_down or is_button_up) and distance_between_mouse_and_button >= donut.outer_radius:
-            return
+        if is_button_down and distance_between_mouse_and_button >= donut.outer_radius:
+            self.track_touches.append(0)
 
         if is_button_down and distance_between_mouse_and_button <= donut.outer_radius:
             self.dragging = True
+            self.track_touches.append(1)
 
         if is_button_up:
-            self.dragging = False
-            self.return_back()
+            if len(self.track_touches) > 0 and self.track_touches[len(self.track_touches) - 1] == 0:
+                for item in self.track_touches:
+                    if item == 0:
+                        self.track_touches.remove(item)
+                return
+            if len(self.track_touches) > 0 and self.track_touches[0] == 1:
+                self.dragging = False
+                self.return_back()
+            self.track_touches = []
 
-        #if (event.type == pygame.MOUSEMOTION or event.type == pygame.FINGERMOTION) and self.dragging:
         if self.dragging:
             self.update_position(mouse_pos, donut)
 

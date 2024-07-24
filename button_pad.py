@@ -36,6 +36,9 @@ class ButtonPad:
 
         if is_button_down and distance_between_mouse_and_button < donut.outer_radius:
             self.dragging = True
+            if 1 in self.track_touches:
+                self.track_touches.append(0)
+                return
             self.track_touches.append(1)
 
         if is_button_up:

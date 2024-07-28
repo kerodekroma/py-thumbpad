@@ -1,11 +1,12 @@
 import pygame
 
 class Donut:
-    def __init__(self, position, outer_radius, inner_radius, color):
+    def __init__(self, position, outer_radius, inner_radius, color, bg_color):
         self.position = position
         self.outer_radius = outer_radius
         self.inner_radius = inner_radius
         self.color = color
+        self.bg_color = bg_color
 
     def update(self):
         pass
@@ -15,6 +16,11 @@ class Donut:
         outer_surface = pygame.Surface((self.outer_radius * 2, self.outer_radius * 2), pygame.SRCALPHA)
         pygame.draw.circle(outer_surface, (0,0,0), (self.outer_radius, self.outer_radius), self.outer_radius)
         outer_mask = pygame.mask.from_surface(outer_surface)
+
+        # background color for the inner circle
+        bg_inner_surface = pygame.Surface((self.outer_radius * 2, self.outer_radius * 2), pygame.SRCALPHA)
+        pygame.draw.circle(bg_inner_surface, self.bg_color, (self.outer_radius, self.outer_radius), self.inner_radius)
+        screen.blit(bg_inner_surface, (self.position[0] - self.outer_radius, self.position[1] - self.outer_radius))
 
         # inner circle
         inner_surface = pygame.Surface((self.outer_radius * 2, self.outer_radius * 2), pygame.SRCALPHA)

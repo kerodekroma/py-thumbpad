@@ -4,17 +4,23 @@ import button_pad
 from utils import calculate_angle, get_direction, get_direction_expanded
 
 class PyThumbPad:
-    def __init__(self, position, quadrants=4):
+    def __init__(self, position, options):
+        defaults = {
+            "quadrants": 4,
+            "donut_color": (123, 157, 243),
+            "button_color": (255, 255, 0),
+            "donut_bg_color": (0, 0, 0)
+        }
+        settings = defaults.copy()
+        settings.update(options)
         self.donut_outer_radius = 125
         self.donut_inner_radius = 120
         self.position = position
-        self.donut_color = (123, 157, 243)
-        self.button_color = (255, 255, 0)
         self.button_radius = 75
-        self.donut = donut.Donut(self.position, self.donut_outer_radius, self.donut_inner_radius, self.donut_color)
-        self.button_pad = button_pad.ButtonPad(self.position, self.button_radius, self.button_color) 
+        self.donut = donut.Donut(self.position, self.donut_outer_radius, self.donut_inner_radius, settings["donut_color"], settings["donut_bg_color"])
+        self.button_pad = button_pad.ButtonPad(self.position, self.button_radius, settings["button_color"]) 
         self.current_angle = 0.0
-        self.quadrants = quadrants
+        self.quadrants = settings["quadrants"]
         self.directions = []
 
     def update(self):

@@ -64,6 +64,10 @@ class App:
         text_rect = text_surface.get_rect(center=(400, 100))
         self.screen.blit(text_surface, text_rect)
 
+        #on boarding
+        text_surface = self.font.render("<-- You should press and drag it", True, PALETTE[5])
+        text_rect = text_surface.get_rect(center=(WIDTH - 230, HEIGHT - 150))
+        self.screen.blit(text_surface, text_rect)
 
         # update thumbpad
         self.thumb_pad.update()

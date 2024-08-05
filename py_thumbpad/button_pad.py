@@ -1,6 +1,6 @@
 import pygame 
 import math
-from tween import Tween
+from py_thumbpad.tween import Tween
 
 def distance(point_1, point_2):
     return math.sqrt((point_1[0] - point_2[0]) ** 2 + (point_1[1] - point_2[1]) ** 2)

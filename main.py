@@ -1,8 +1,13 @@
 import asyncio
 import pygame
-from py_thumbpad import PyThumbPad
 import sys
 from single_square import SingleSquare
+
+import os
+# Insert the parent directory of `py_thumbpad` into `sys.path`
+sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
+from py_thumbpad import PyThumbPad
+
 
 WIDTH, HEIGHT = 800, 600
 

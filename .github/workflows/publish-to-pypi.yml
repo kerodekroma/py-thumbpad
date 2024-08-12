@@ -22,6 +22,11 @@ jobs:
       run: |
         pip install bumpversion setuptools wheel twine
 
+    - name: Configure Git
+      run: |
+        git config --global user.name "kerodekroma"
+        git config --global user.email "kerodekroma@gmail.com"
+
     - name: Bump version and create tag
       id: bump_version
       run: |

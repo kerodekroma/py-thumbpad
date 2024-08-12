@@ -5,7 +5,7 @@ on:
 jobs:
   release_html:
     runs-on: ubuntu-latest
-    name: fecth from GITHUB
+    name: fetch from GITHUB
     steps:
       - name: download zip file
         id: download-html

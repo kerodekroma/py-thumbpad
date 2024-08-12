@@ -1,4 +1,4 @@
-name:  Publish Python 🐍 distributions 📦 to PyPI
+name: Publish Python 🐍 distributions 📦 to PyPI
 
 on:
   push:
@@ -39,7 +39,7 @@ jobs:
         echo "Generated new PYPI tag: $PYPI_TAG"
         echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
         echo "PYPI_TAG=$PYPI_TAG" >> $GITHUB_ENV
-        sed -i "s/{{VERSION_PLACEHOLDER}}/${{ $PYPI_TAG }}/g" setup.py
+        sed -i "s/{{VERSION_PLACEHOLDER}}/${PYPI_TAG}/g" setup.py
 
     - name: Build package
       run: python setup.py sdist bdist_wheel

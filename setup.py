@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="py_thumbpad",
-    version="0.1.2",
+    version="{{VERSION_PLACEHOLDER}}",
     author="kerodekroma",
     author_email="kerodekroma@gmail.com",
     description="A virtual thumb pad for directional input, featuring a central donut shape and a movable button pad.",

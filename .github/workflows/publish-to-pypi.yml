@@ -42,5 +42,8 @@ jobs:
         password: ${{ secrets.PYPI_API_TOKEN }}
 
     - name: Push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_CREDENTIALS }}
       run: |
+        git remote set-url origin https://${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
         git push --follow-tags

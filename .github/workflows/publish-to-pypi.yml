@@ -1,0 +1,41 @@
+name:  Publish Python 🐍 distributions 📦 to PyPI
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install bumpversion setuptools wheel twine
+
+    - name: Bump version and create tag
+      id: bump_version
+      run: |
+        bumpversion patch --allow-dirty
+        echo "New version is ${{ steps.bump_version.outputs.new_version }}"
+
+    - name: Build package
+      run: python setup.py sdist bdist_wheel
+
+    - name: Publish distribution 📦 to PyPI
+      uses: pypa/gh-action-pypi-publish@master
+      with:
+        password: ${{ secrets.PYPI_API_TOKEN }}
+
+    - name: Push changes
+      run: |
+        git push --follow-tags

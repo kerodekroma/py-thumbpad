@@ -37,8 +37,9 @@ jobs:
           VERSION_PREFIX="v"
           VERSION_MAJOR_MINOR="1.0"
 
-          echo "Fetching all tags from the remote repository..."
+          echo "START => Fetching all tags from the remote repository..."
           git fetch --tags
+          echo "END => Fetching all tags from the remote repository..."
           if [ $? -ne 0 ]; then
             echo "Error: Failed to fetch tags"
             exit 1

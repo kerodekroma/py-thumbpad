@@ -30,20 +30,29 @@ jobs:
       - name: Generate Git Tag
         id: generate_tag
         run: |
-          set -e  # Exit immediately if a command exits with a non-zero status
+          set -ex  # Exit on error (-e) and print each command (-x)
+
+          echo "Starting tag generation..."
+
           VERSION_PREFIX="v"
           VERSION_MAJOR_MINOR="1.0"
 
-          # Fetch all tags from the remote repository
+          echo "Fetching all tags from the remote repository..."
           git fetch --tags
+          if [ $? -ne 0 ]; then
+            echo "Error: Failed to fetch tags"
+            exit 1
+          fi
 
-          # Get the latest patch version for the given major.minor version
+          echo "Finding the latest patch version for ${VERSION_MAJOR_MINOR}..."
           VERSION_PATCH=$(git tag --list "${VERSION_PREFIX}${VERSION_MAJOR_MINOR}.*" --sort=-version:refname | head -n 1 | grep -oE '[0-9]+$')
           
           if [ $? -ne 0 ]; then
-            echo "Failed to retrieve the latest patch version."
+            echo "Warning: Failed to retrieve the latest patch version. Setting patch version to 0."
             VERSION_PATCH=0
           fi
+
+          echo "Current patch version: $VERSION_PATCH"
 
           # Increment the patch version or start at 0 if none exists
           if [ -z "$VERSION_PATCH" ]; then
@@ -51,6 +60,8 @@ jobs:
           else
             VERSION_PATCH=$((VERSION_PATCH + 1))
           fi
+
+          echo "New patch version: $VERSION_PATCH"
 
           PYPI_TAG="${VERSION_MAJOR_MINOR}.${VERSION_PATCH}"
           NEW_TAG="${VERSION_PREFIX}${PYPI_TAG}"
@@ -62,8 +73,20 @@ jobs:
           echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
           echo "PYPI_TAG=$PYPI_TAG" >> $GITHUB_ENV
 
+          # Check if the environment variables are set correctly
+          echo "Environment variable NEW_TAG: ${NEW_TAG}"
+          echo "Environment variable PYPI_TAG: ${PYPI_TAG}"
+
           # Replace VERSION_PLACEHOLDER in setup.py with the new version
+          echo "Updating setup.py with the new version..."
           sed -i "s/{{VERSION_PLACEHOLDER}}/${PYPI_TAG}/g" setup.py
+          
+          if [ $? -ne 0 ]; then
+            echo "Error: Failed to update setup.py"
+            exit 1
+          fi
+
+          echo "Tag generation completed successfully."
 
       - name: Build package
         run: python3 setup.py sdist bdist_wheel

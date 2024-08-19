@@ -1,5 +1,7 @@
 # PyThumbPad
 
+[![PyPI version](https://badge.fury.io/py/py_thumbpad.svg)](https://badge.fury.io/py/py_thumbpad)
+
 PyThumbPad is a customizable virtual thumb pad for directional input, designed for use in Pygame projects. It features a central donut-shaped control area and a movable button pad, making it ideal for mobile games or any application requiring a thumb stick-style input.
 
 ## Features
@@ -23,6 +25,14 @@ Clone the repository and include the `py_thumbpad` package in your Pygame projec
 
 ```bash
 git clone https://github.com/kerodekroma/py-thumbpad.git
+```
+
+## Updating the PyThumbPad Package
+
+If you've already installed the `py_thumbpad` package and want to update it to the latest version, you can easily do so using `pip`. Run the following command in your terminal or command prompt:
+
+```bash
+pip install --upgrade py_thumbpad
 ```
 
 ## Usage

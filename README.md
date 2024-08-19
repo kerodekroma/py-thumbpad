@@ -1,6 +1,6 @@
 # PyThumbPad
 
-[![PyPI version](https://badge.fury.io/py/py_thumbpad.svg)](https://badge.fury.io/py/py_thumbpad)
+[![PyPI version](https://badge.fury.io/py/py-thumbpad.svg?version=latest)](https://badge.fury.io/py/py-thumbpad)
 
 PyThumbPad is a customizable virtual thumb pad for directional input, designed for use in Pygame projects. It features a central donut-shaped control area and a movable button pad, making it ideal for mobile games or any application requiring a thumb stick-style input.
 

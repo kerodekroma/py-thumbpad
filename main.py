@@ -2,7 +2,7 @@ import asyncio
 import pygame
 import sys
 from single_square import SingleSquare
-from py_thumbpad import PyThumbPad
+from py_thumbpad import PyThumbPad, PY_THUMBPAD_Directions
 
 WIDTH, HEIGHT = 800, 600
 
@@ -29,17 +29,17 @@ class App:
     self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Demo of ThumbPad")
     self.thumb_pad = PyThumbPad((150, HEIGHT - 150), {
+       "quadrants": 8,
        "button_color": PALETTE[2],
        "donut_color": PALETTE[5],
-       "donut_bg_color": PALETTE[3]
+       "donut_bg_color": PALETTE[3],
     })
     #font
     self.font = pygame.font.Font('assets/font/PixelSimpel.otf', 32)
 
     #single square
     square_size = 50
-    self.single_square = SingleSquare(( ( WIDTH - square_size )//2, (HEIGHT - square_size)//2 ), square_size, PALETTE[7])
-
+    self.single_square = SingleSquare(( ( WIDTH - square_size )//2, (HEIGHT - square_size)//2 ), square_size, PALETTE[7], (WIDTH, HEIGHT))
   async def render(self):
     while True:
         for event in pygame.event.get():
@@ -51,6 +51,17 @@ class App:
 
         self.screen.fill(PALETTE[1])
 
+
+        # Check the direction the thumbpad is pointing to
+        if PY_THUMBPAD_Directions.TOP in self.thumb_pad.directions:
+            print("Moving UP!")
+        elif PY_THUMBPAD_Directions.BOTTOM in self.thumb_pad.directions:
+            print("Moving DOWN!")
+        elif PY_THUMBPAD_Directions.LEFT in self.thumb_pad.directions:
+            print("Moving LEFT!")
+        elif PY_THUMBPAD_Directions.RIGHT in self.thumb_pad.directions:
+            print("Moving RIGHT!")
+
         self.single_square.move(self.thumb_pad.directions)
         # bg to highlight the slider with theme 'one'
         pygame.draw.rect(self.screen, PALETTE[0], (0, 0, self.screen.get_width(), 120))
@@ -60,7 +71,7 @@ class App:
         text_rect = text_surface.get_rect(center=(400, 50))
         self.screen.blit(text_surface, text_rect)
 
-        text_surface = self.font.render(f'Direction: {", ".join( self.thumb_pad.directions )}', True, PALETTE[5])
+        text_surface = self.font.render(f'Direction: {", ".join([direction.name for direction in self.thumb_pad.directions])}', True, PALETTE[5])
         text_rect = text_surface.get_rect(center=(400, 100))
         self.screen.blit(text_surface, text_rect)
 

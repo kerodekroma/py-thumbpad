@@ -2,6 +2,10 @@ import pygame
 from .donut import Donut
 from .button_pad import ButtonPad
 from .utils import calculate_angle, get_direction, get_direction_expanded
+from .events import PY_THUMBPAD_Directions
+
+# to export the enum of the custom events
+__all__ = ['PY_THUMBPAD_Directions']
 
 class PyThumbPad:
     def __init__(self, position, options):
@@ -38,7 +42,7 @@ class PyThumbPad:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             self.current_angle = calculate_angle(self.position[0], self.position[1], mouse_x, mouse_y )
             self.directions = self.get_directions(self.current_angle)
-
+    
     def get_directions(self, current_angle):
         if self.quadrants == 4:
             return get_direction(current_angle)

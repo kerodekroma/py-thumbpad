@@ -1,4 +1,5 @@
 import math
+from .events import PY_THUMBPAD_Directions
 
 # Function to calculate angle in degrees from reference_coord to mouse position
 def calculate_angle(x1, y1, x2, y2):
@@ -13,16 +14,16 @@ def get_direction(angle):
         return []
 
     if -135 <= angle < -45:
-        return [ 'top' ]
+        return [ PY_THUMBPAD_Directions.TOP ]
 
     if  angle >= 135 or angle < -135:
-        return [ "left" ]
+        return [ PY_THUMBPAD_Directions.LEFT ]
 
     if -45 <= angle < 45:
-        return [ "right" ]
+        return [ PY_THUMBPAD_Directions.RIGHT ]
 
     if  45 <= angle < 135:
-        return [ "bottom" ]
+        return [ PY_THUMBPAD_Directions.BOTTOM ]
     
     return []
 
@@ -31,27 +32,27 @@ def get_direction_expanded(angle):
         return []
 
     if -112.5 <= angle < -67.5:
-        return [ 'top' ]
+        return [ PY_THUMBPAD_Directions.TOP ]
 
     if -157.5 <= angle < -112.5:
-        return [ 'top', 'left', 'top-left' ]
+        return [ PY_THUMBPAD_Directions.TOP, PY_THUMBPAD_Directions.LEFT ]
 
     if -67.5 <= angle < -22.5:
-        return [ 'top', 'right', 'top-right' ]
+        return [ PY_THUMBPAD_Directions.TOP, PY_THUMBPAD_Directions.RIGHT ]
 
     if 67.5 <= angle < 112.5:
-        return [ 'bottom' ]
+        return [ PY_THUMBPAD_Directions.BOTTOM ]
 
     if 112.5 <= angle < 157.5:
-        return [ 'bottom', 'left', 'bottom-left' ]
+        return [ PY_THUMBPAD_Directions.BOTTOM, PY_THUMBPAD_Directions.LEFT ]
 
     if 22.5 <= angle < 67.5:
-        return [ 'bottom', 'right', 'bottom-right' ]
+        return [ PY_THUMBPAD_Directions.BOTTOM, PY_THUMBPAD_Directions.RIGHT ]
 
     if angle >= 157.5 or  angle < -157.5:
-        return [ 'left']
+        return [ PY_THUMBPAD_Directions.LEFT ]
         
     if -22.5 <= angle < 22.5:
-        return [ 'right']
+        return [ PY_THUMBPAD_Directions.RIGHT ]
     
     return []

@@ -29,31 +29,34 @@ git clone https://github.com/kerodekroma/py-thumbpad.git
 Here's a basic example of how to use PyThumbPad in your Pygame project:
 
 ```py
-import pygame
-from py_thumbpad import PyThumbPad
+from py_thumbpad import PyThumbPad, PY_THUMBPAD_Directions
 
-# Initialize Pygame
-pygame.init()
-screen = pygame.display.set_mode((800, 600))
+# Initialize the thumbpad at position (400, 300)
+thumbpad = PyThumbPad((400, 300), {})
 
-# Create a PyThumbPad instance
-thumb_pad = PyThumbPad((400, 300), {"quadrants": 8})
-
+# In your game loop
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
-        # Listen for events on the thumb pad
-        thumb_pad.listen_events(event)
-
-    # Update thumb pad state
-    thumb_pad.update()
-
-    # Render everything
-    screen.fill((0, 0, 0))
-    thumb_pad.render(screen)
+        
+        thumbpad.listen_events(event)
+    
+    # Check the direction the thumbpad is pointing to
+    if PY_THUMBPAD_Directions.TOP in thumbpad.directions:
+        print("Moving UP!")
+    elif PY_THUMBPAD_Directions.BOTTOM in thumbpad.directions:
+        print("Moving DOWN!")
+    elif PY_THUMBPAD_Directions.LEFT in thumbpad.directions:
+        print("Moving LEFT!")
+    elif PY_THUMBPAD_Directions.RIGHT in thumbpad.directions:
+        print("Moving RIGHT!")
+    
+    # Update and render the thumbpad
+    thumbpad.update()
+    thumbpad.render(screen)
+    
     pygame.display.flip()
 
 pygame.quit()

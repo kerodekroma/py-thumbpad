@@ -1,23 +1,36 @@
 import pygame
+from py_thumbpad import PY_THUMBPAD_Directions
 
 class SingleSquare:
-    def __init__(self, position, size, color) -> None:
+    def __init__(self, position, size, color, bounds) -> None:
         self.x = position[0]
         self.y = position[1]
-        self.size = size
+        self.bounds_x = bounds[0]
+        self.bounds_y = bounds[1]
+        self.rect = pygame.Rect(self.x, self.y, size, size )
         self.color = color
         self.speed = 5
         self.size = 50
 
     def move(self, directions):
-        if "left" in directions:
-            self.x -= self.speed
-        if "right" in directions:
-            self.x += self.speed
-        if "top" in directions:
-            self.y -= self.speed
-        if "bottom" in directions:
-            self.y += self.speed
+        if PY_THUMBPAD_Directions.LEFT in directions:
+            self.rect.x -= self.speed
+        if PY_THUMBPAD_Directions.RIGHT in directions:
+            self.rect.x += self.speed
+        if PY_THUMBPAD_Directions.TOP in directions:
+            self.rect.y -= self.speed
+        if PY_THUMBPAD_Directions.BOTTOM in directions:
+            self.rect.y += self.speed
+
+        if self.rect.x < 0:
+            self.rect.x = 0
+
+        if self.rect.y < 0:
+            self.rect.y = 0
+
+        # Apply bounds checks
+        self.rect.x = max(0, min(self.rect.x, self.bounds_x - self.size))
+        self.rect.y = max(0, min(self.rect.y, self.bounds_y - self.size))
 
     def render(self, screen):
-        pygame.draw.rect(screen, self.color, (self.x, self.y, self.size, self.size))
+        pygame.draw.rect(screen, self.color, self.rect)

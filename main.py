@@ -63,6 +63,7 @@ class App:
             print("Moving RIGHT!")
 
         self.single_square.move(self.thumb_pad.directions)
+
         # bg to highlight the slider with theme 'one'
         pygame.draw.rect(self.screen, PALETTE[0], (0, 0, self.screen.get_width(), 120))
 

@@ -25,11 +25,8 @@ jobs:
 
       - name: build
         run: |
-          echo "Installing pygbag"
-          uv pip install --system pygbag
-          echo "pygbag success!"
           echo "building the project"
-          uv run pygbag --build $GITHUB_WORKSPACE/main.py
+          uvx pygbag --build $GITHUB_WORKSPACE/main.py
           echo "DONE"
           zip -j -r pythumbpad_demo.zip build/web
 

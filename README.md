@@ -11,6 +11,14 @@ PyThumbPad is a customizable virtual thumb pad for directional input, designed f
 - **Simple Integration**: Easy to add to any Pygame project with minimal setup.
 - **Responsive Input Handling**: Smoothly tracks user input and updates the direction accordingly.
 
+## Installation using uv
+
+If you are using a modern `uv` project, you can easily add `py_thumbpad` to your dependencies:
+
+```bash
+uv add py_thumbpad
+```
+
 ## Installation using PyPI
 
 You can install the `py_thumbpad` package directly from PyPI using pip:
@@ -19,20 +27,31 @@ You can install the `py_thumbpad` package directly from PyPI using pip:
 pip install py_thumbpad
 ```
 
-## Installation using GIT
+## Running the Demo / Local Development with uv
 
-Clone the repository and include the `py_thumbpad` package in your Pygame project.
+If you clone the repository and want to run the demo or develop locally:
 
 ```bash
+# Clone the repository
 git clone https://github.com/kerodekroma/py-thumbpad.git
+cd py-thumbpad
+
+# Run the demo app instantly (uv will bootstrap the venv & dependencies automatically)
+uv run main.py
 ```
 
 ## Updating the PyThumbPad Package
 
-If you've already installed the `py_thumbpad` package and want to update it to the latest version, you can easily do so using `pip`. Run the following command in your terminal or command prompt:
+If you installed the `py_thumbpad` package with pip and want to update it:
 
 ```bash
 pip install --upgrade py_thumbpad
+```
+
+If you are using uv, you can update it with:
+
+```bash
+uv add --upgrade py_thumbpad
 ```
 
 ## Usage

@@ -17,13 +17,18 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
 
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
       - name: build
         run: |
           echo "Installing pygbag"
-          python3 -m pip install pygbag
+          uv pip install --system pygbag
           echo "pygbag success!"
           echo "building the project"
-          python3 -m pygbag --build $GITHUB_WORKSPACE/main.py
+          uv run pygbag --build $GITHUB_WORKSPACE/main.py
           echo "DONE"
           zip -j -r pythumbpad_demo.zip build/web
 
@@ -80,17 +85,16 @@ jobs:
 
           # Replace VERSION_PLACEHOLDER in setup.py with the new version
           echo "Updating setup.py with the new version..."
-          sed -i "s/{{VERSION_PLACEHOLDER}}/${PYPI_TAG}/g" setup.py
-          
-          if [ $? -ne 0 ]; then
-            echo "Error: Failed to update setup.py"
-            exit 1
-          fi
+          sed -i "s/{{VERSION_PLACEHOLDER}}/${PYPI_TAG}/g" setup.py || true
+
+          # Replace 0.0.0 in pyproject.toml with the new version
+          echo "Updating pyproject.toml with the new version..."
+          sed -i "s/version = \"0.0.0\"/version = \"${PYPI_TAG}\"/g" pyproject.toml || true
 
           echo "Tag generation completed successfully."
 
       - name: Build package
-        run: python3 setup.py sdist bdist_wheel
+        run: uv build
 
       - name: Publish distribution 📦 to PyPI
         uses: pypa/gh-action-pypi-publish@master

@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "py_thumbpad"
+version = "0.0.0"
+description = "A virtual thumb pad for directional input, featuring a central donut shape and a movable button pad."
+readme = "README.md"
+requires-python = ">=3.6"
+license = { text = "MIT" }
+authors = [
+    { name = "kerodekroma", email = "kerodekroma@gmail.com" }
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "pygame>=2.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/kerodekroma/py-thumbpad"
+
+[tool.hatch.build.targets.wheel]
+packages = ["py_thumbpad"]
